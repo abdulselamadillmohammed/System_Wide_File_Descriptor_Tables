@@ -36,3 +36,21 @@ FD 4 → socket
 
 
 2. System wide FD table
+
+- This is kernel-global in that it contains ALL open file descriptors.
+- Each entry stores:    
+    - The file offset, File status flags (O_APPEND, O_NONBLOCK, etc)
+    - Pointer to inode
+    - Reference count
+
+* Note: Multiple processes can point to the same system-wide entry.
+
+Example
+Process A FD 3  ─┐
+                 |--─> System-wide file entry #27
+Process B FD 5  ─┘
+
+- If both processes duplicated the FD or inherited via fork, they share the same file offset and same flags
+
+
+## FD → Disk (Full Chain)
