@@ -6,6 +6,22 @@
 #include <string.h>
 #include <ctype.h>
 
+// Instead of creating an array to store the state of my 
+// arguments then I will update them in the parser;
+
+
+typedef struct{
+    int per_process;
+    int systemWide;
+    int Vnodes;
+    int composite;
+    int summary;
+    int threshold;
+
+    int process_id;
+} Config;
+
+
 // Compilation step: gcc -Wall -std=c99 process.c -o process
 // All args calling
 
@@ -40,8 +56,7 @@
  * user executing the program
  * 
  */
- void parser(int argc, char** argv, 
-    int* flagged_arguments, int* positional_argument){
+ void parser(int argc, char** argv, Config* cfg){
 
     // *(positional_argument) = x; 
     // note to self, see if positional_argument[0] works
@@ -78,13 +93,20 @@
 
 int main(int argc, char** argv){
     // Initalize the flagged argument container
-    int flagged_arguments[] = {0,0,0,
-                               0,0,0};
 
-    int positional_argument = -1;
+    // For some reason this version is allowed
+    // NOTE: add comments clarifying what each predefined arg is 
+    // signifying 
+    Config cfg = {  0,    
+                    0,
+                    0,
+                    0,
+                    0,
+                    0, 
+                    -1};
 
     // Call to parser
-    parser(argc, argv, flagged_arguments, &positional_argument);
+    parser(argc, argv, &cfg);
 
     for (int i = 0; i < 6; i++)
         printf("Postional argument: %d = %d \n", i, flagged_arguments[i]);
