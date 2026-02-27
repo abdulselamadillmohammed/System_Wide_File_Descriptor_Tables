@@ -17,3 +17,22 @@
 2. --systemWide: indicates that only the system-wide FD table will be displayed
 
 ### The diffrence between a process FD table and a system-wide FD table
+
+1. Process FD table
+- Each process has its own FD table
+    - It maps small integer to open file description
+
+eg. Every time you call fork, it clones
+the FD table hence why you can pipe with it 
+
+FD 0 → stdin
+FD 1 → stdout
+FD 2 → stderr
+FD 3 → open file A
+FD 4 → socket
+
+* Typical ways you can modify FD tables is with:
+    - open(), dup(), fork(), close()
+
+
+2. System wide FD table
