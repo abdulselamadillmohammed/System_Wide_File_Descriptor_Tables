@@ -1,0 +1,53 @@
+# Compiled object files
+*.o
+*.obj
+
+# Static / shared libraries
+*.a
+*.so
+*.so.*
+*.dylib
+
+# Executables
+*.out
+*.exe
+*.app
+
+# Debug symbols
+*.dSYM/
+*.su
+
+# Coverage files
+*.gcda
+*.gcno
+*.gcov
+
+# Dependency files (gcc -MMD)
+*.d
+
+# Core dumps
+core
+core.*
+*.core
+
+# Build directories
+build/
+bin/
+dist/
+
+# CMake (if ever used)
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+compile_commands.json
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# macOS
+.DS_Store
