@@ -56,11 +56,18 @@
 
         else if (strcmp(argv[i+1], "--composite") == 0)
             flagged_arguments[3] = 1;
-            
+
         else if (strcmp(argv[i+1], "--summary") == 0)
-            flagged_arguments[3] = 1;
+            flagged_arguments[4] = 1;
 
-
+        else if (strncmp(argv[i+1], "--threshold", 11) == 0)
+            flagged_arguments[5] = atoi(argv[i+1] + 11);
+        
+        // Check positional argument (all you have to )
+        // Note: I'm going to check that the current version i have 
+        // is 0 and only will i change
+        else if (isdigit(argv[i+1][0])) // If the first digit is a number
+            *(positional_argument) = atoi(argv[i+1]);
     }
  }
 
@@ -70,7 +77,10 @@ int main(int argc, char** argv){
     int flagged_arguments[] = {0,0,0,
                                0,0,0};
 
-    int positional_argument = 0;
+    int positional_argument = -1;
+
+    // Call to parser
+    parser(argc, argv, flagged_arguments, &positional_argument);
 
     for (int i = 0; i < 6; i++)
         printf("Postional argument: %d = %d \n", i, flagged_arguments[i]);
