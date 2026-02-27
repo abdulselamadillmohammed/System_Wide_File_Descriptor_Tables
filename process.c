@@ -105,20 +105,7 @@ int main(int argc, char** argv){
 
     // Call to parser
     parser(argc, argv, &cfg);
-/*
-
-typedef struct{
-    int per_process;
-    int systemWide;
-    int Vnodes;
-    int composite;
-    int summary;
-    int threshold;
-
-    int process_id;
-} Config;
-
-*/
+    
     printf("Per-process: %d\n", cfg.per_process);
     printf("System-wide: %d\n", cfg.systemWide);
     printf("Vnodes: %d\n", cfg.Vnodes);
