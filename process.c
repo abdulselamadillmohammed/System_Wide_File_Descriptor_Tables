@@ -41,7 +41,27 @@
 
     // *(positional_argument) = x; 
     // note to self, see if positional_argument[0] works
+    
+    for (int i=0; i < (argc-1); i++){
+        // i + 1 because we left shift argc to allow for 
+        // 0 based indexing
+        if (strcmp(argv[i+1], "--per-process") == 0)
+            flagged_arguments[0] = 1;
 
+        else if (strcmp(argv[i+1], "--systemWide") ==0 )
+            flagged_arguments[1] = 1;
+
+        else if (strcmp(argv[i+1], "--Vnodes") == 0)
+            flagged_arguments[2] = 1;
+
+        else if (strcmp(argv[i+1], "--composite") == 0)
+            flagged_arguments[3] = 1;
+            
+        else if (strcmp(argv[i+1], "--summary") == 0)
+            flagged_arguments[3] = 1;
+
+
+    }
  }
 
 
@@ -52,5 +72,9 @@ int main(int argc, char** argv){
 
     int positional_argument = 0;
 
+    for (int i = 0; i < 6; i++)
+        printf("Postional argument: %d = %d \n", i, flagged_arguments[i]);
+
+    printf("%d", positional_argument);
     return 0;
 }
