@@ -65,32 +65,30 @@ typedef struct{
         // i + 1 because we left shift argc to allow for 
         // 0 based indexing
         if (strcmp(argv[i+1], "--per-process") == 0)
-            flagged_arguments[0] = 1;
+            cfg->per_process = 1;
 
         else if (strcmp(argv[i+1], "--systemWide") ==0 )
-            flagged_arguments[1] = 1;
+            cfg->systemWide = 1;
 
         else if (strcmp(argv[i+1], "--Vnodes") == 0)
-            flagged_arguments[2] = 1;
+            cfg->Vnodes = 1;
 
         else if (strcmp(argv[i+1], "--composite") == 0)
-            flagged_arguments[3] = 1;
+            cfg->composite = 1;
 
         else if (strcmp(argv[i+1], "--summary") == 0)
-            flagged_arguments[4] = 1;
+            cfg->summary = 1;
 
         else if (strncmp(argv[i+1], "--threshold=", 12) == 0)
-            flagged_arguments[5] = atoi(argv[i+1] + 12);
+            cfg->threshold = atoi(argv[i+1] + 12);
         
         // Check positional argument (all you have to )
         // Note: I'm going to check that the current version i have 
         // is 0 and only will i change
         else if (isdigit(argv[i+1][0])) // If the first digit is a number
-            *(positional_argument) = atoi(argv[i+1]);
+            cfg->process_id = atoi(argv[i+1]);
     }
  }
-
-
 int main(int argc, char** argv){
     // Initalize the flagged argument container
 
@@ -107,10 +105,28 @@ int main(int argc, char** argv){
 
     // Call to parser
     parser(argc, argv, &cfg);
+/*
 
-    for (int i = 0; i < 6; i++)
-        printf("Postional argument: %d = %d \n", i, flagged_arguments[i]);
+typedef struct{
+    int per_process;
+    int systemWide;
+    int Vnodes;
+    int composite;
+    int summary;
+    int threshold;
 
-    printf("%d\n", positional_argument);
+    int process_id;
+} Config;
+
+*/
+    printf("Per-process: %d\n", cfg.per_process);
+    printf("System-wide: %d\n", cfg.systemWide);
+    printf("Vnodes: %d\n", cfg.Vnodes);
+    printf("Composite: %d\n", cfg.composite);
+    printf("Summary: %d\n", cfg.summary);
+    printf("Threshold: %d\n", cfg.threshold);
+
+    printf("Process_id: %d\n", cfg.process_id);
+
     return 0;
 }
