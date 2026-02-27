@@ -51,3 +51,7 @@ compile_commands.json
 
 # macOS
 .DS_Store
+
+a.out
+process_creator
+*.out
