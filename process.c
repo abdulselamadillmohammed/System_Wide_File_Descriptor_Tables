@@ -4,6 +4,10 @@
 #include <unistd.h>
 
 #include <string.h>
+#include <ctype.h>
+
+// Compilation step: gcc -Wall -std=c99 process.c -o process
+// All args calling
 
 // Parser 
 /* The parser will extract the following properties
@@ -60,8 +64,8 @@
         else if (strcmp(argv[i+1], "--summary") == 0)
             flagged_arguments[4] = 1;
 
-        else if (strncmp(argv[i+1], "--threshold", 11) == 0)
-            flagged_arguments[5] = atoi(argv[i+1] + 11);
+        else if (strncmp(argv[i+1], "--threshold=", 12) == 0)
+            flagged_arguments[5] = atoi(argv[i+1] + 12);
         
         // Check positional argument (all you have to )
         // Note: I'm going to check that the current version i have 
@@ -85,6 +89,6 @@ int main(int argc, char** argv){
     for (int i = 0; i < 6; i++)
         printf("Postional argument: %d = %d \n", i, flagged_arguments[i]);
 
-    printf("%d", positional_argument);
+    printf("%d\n", positional_argument);
     return 0;
 }
