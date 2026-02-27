@@ -22,6 +22,10 @@ int main(int argc, char** argv){
         perror("Result failed");
         exit(1);
     }
-
+    else if (result == 0)
+        i -= 2;
+    else
+        i+=2;
+    printf("%d\n", i);
     return 0;
 }
