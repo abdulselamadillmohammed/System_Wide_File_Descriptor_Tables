@@ -1,0 +1,1 @@
+# The purpose of this tool is to act as a display for the tables which will be used by the OS to keep track of open files, assignation of File Descriptors (FD) and processes. 
