@@ -36,17 +36,21 @@
  * user executing the program
  * 
  */
+ void parser(int argc, char** argv, 
+    int* flagged_arguments, int* positional_argument){
+
+    // *(positional_argument) = x; 
+    // note to self, see if positional_argument[0] works
+
+ }
 
 
 int main(int argc, char** argv){
-    // First step, create a parser for the 
-    //passed in arguments; note: take from 
-    // assignment 1
+    // Initalize the flagged argument container
+    int flagged_arguments[] = {0,0,0,
+                               0,0,0};
 
-    // Print out the args
-    printf("%s\n", argv[0]);
-    printf("%s\n", argv[1]);
-    printf("%s\n", argv[2]);
+    int positional_argument = 0;
 
     return 0;
 }
