@@ -5,5 +5,5 @@ TARGET = showFDtables
 
 all: $(TARGET)
 
-$(TARGET): process.c
+$(TARGET): main.c
 	$(CC) $(CFLAGS) process.c -o $@
