@@ -79,10 +79,15 @@ void collect_fd_for_all_user_processes(FDTable *table){
         }
 
         pid = atoi(entry->d_name);
+        sprintf(proc_path, "/proc/%d", pid);
 
+        if (stat(proc_path, &st) == -1)
+            continue;
         
+        if (st.st_uid == current_uid) 
+            collect_fd_for_pid(pid, table);
     }
 
+    closedir(proc_dir);
 
-    
 }
