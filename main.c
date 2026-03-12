@@ -144,8 +144,19 @@ int main(int argc, char** argv){
                     -1, // Threshold can technically be 0 so set to -1
                     -1};
 
+
     // Call to parser
     parser(argc, argv, &cfg);
+    
+    /* Default behavior: if no table flag was passed, use composite */
+    if (cfg.per_process == 0 &&
+        cfg.systemWide == 0 &&
+        cfg.Vnodes == 0 &&
+        cfg.composite == 0 &&
+        cfg.summary == 0) {
+        cfg.composite = 1;
+    }
+
     
     printf("Per-process: %d\n", cfg.per_process);
     printf("System-wide: %d\n", cfg.systemWide);
