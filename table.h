@@ -18,6 +18,7 @@ typedef struct {
     int capacity;
 } FDTable;
 
-
-
+void init_fd_table(FDTable *table);
+void append_fd_entry(FDTable *table, FDEntry entry);
+void free_fd_table(FDTable *table);
 #endif
