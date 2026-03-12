@@ -64,6 +64,7 @@ If no args are passed in:
     // signifying 
     Config cfg = {0, 0, 0, 0, 0, -1, -1};
     FDTable table;
+    SummaryTable summary_table;
 
     // Call to parser
     parser(argc, argv, &cfg);
@@ -78,12 +79,14 @@ If no args are passed in:
     }
 
     init_fd_table(&table);
+    init_summary_table(&summary_table);
 
-    if (cfg.process_id != -1) {
+    if (cfg.process_id != -1)
         collect_fd_for_pid(cfg.process_id, &table);
-    } else {
+    else
         collect_fd_for_all_user_processes(&table);
-    }
+    
+    build_summary_table(&table, &summary_table);
 
     if (cfg.per_process)
         print_per_process_table(&table);
@@ -96,7 +99,9 @@ If no args are passed in:
     
     if (cfg.composite) 
         print_composite_table(&table);
-
+    
     free_fd_table(&table);
+    free_summary_table(&summary_table);
+
     return 0;
 }

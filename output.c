@@ -112,3 +112,53 @@ void free_summary_table(SummaryTable *table) {
     table->size = 0;
     table->capacity = 0;
 }
+
+void build_summary_table(FDTable *fd_table, SummaryTable *summary_table) {
+    for (int i = 0; i < fd_table->size; i++) {
+        append_or_increment_summary(summary_table, 
+                                    fd_table->entries[i].pid);
+    }
+}
+
+void print_summary_table(SummaryTable *summary_table) {
+    printf("\n");
+    printf("         Summary Table\n");
+    printf("         =============\n");
+
+    for (int i = 0; i < summary_table->size; i++) {
+        printf("%d (%d)", summary_table->entries[i].pid,
+                         summary_table->entries[i].count);
+
+        if (i < (summary_table->size - 1)) {
+            printf(",  ");
+        }
+    }
+
+    printf("\n");
+}
+
+void print_threshold_table(SummaryTable *summary_table, int threshold) {
+    int found = 0;
+
+    if (threshold < 0) {
+        return;
+    }
+
+    printf("\n");
+    printf("## Offending processes:\n");
+
+    for (int i = 0; i < summary_table->size; i++) {
+        if (summary_table->entries[i].count > threshold) {
+            printf("%d (%d)", summary_table->entries[i].pid,
+                             summary_table->entries[i].count);
+            printf(", ");
+            found = 1;
+        }
+    }
+
+    if (!found) {
+        printf("None");
+    }
+
+    printf("\n");
+}
