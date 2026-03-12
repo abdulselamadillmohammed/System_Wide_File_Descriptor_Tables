@@ -20,7 +20,7 @@ void collect_fd_for_pid(pid_t pid, FDTable *table){
         return;
     }
 
-    while ((entry == readdir(fd_dir)) != NULL) {
+    while ((entry = readdir(fd_dir)) != NULL) {
         FDEntry fd_entry;
         char link_path[1024];
         char target_path[MAX_FILENAME]; 
