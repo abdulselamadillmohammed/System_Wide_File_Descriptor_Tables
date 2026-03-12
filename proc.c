@@ -28,9 +28,6 @@ void collect_fd_for_pid(pid_t pid, FDTable *table){
         struct stat st;
         ssize_t len;
 
-        if (strcmp(entry->d_name, ".") == 0 || strcmp(entry->d_name, "..") == 0) {
-            continue;
-        }
         if (!is_number_string(entry->d_name)) {
             continue;
         }
@@ -60,3 +57,32 @@ void collect_fd_for_pid(pid_t pid, FDTable *table){
     closedir(fd_dir);
 }
 
+void collect_fd_for_all_user_processes(FDTable *table){
+    DIR *proc_dir;
+    struct dirent *entry;
+    uid_t current_uid;
+
+    current_uid = getuid();
+
+    proc_dir = opendir("/proc");
+    if (proc_dir == NULL){
+        return;
+    }
+
+    while ((entry = readdir(proc_dir)) != NULL) {
+        char proc_path[1024];
+        struct stat st;
+        pid_t pid;
+        
+        if (!is_number_string(entry->d_name)) {
+            continue;
+        }
+
+        pid = atoi(entry->d_name);
+
+        
+    }
+
+
+    
+}
