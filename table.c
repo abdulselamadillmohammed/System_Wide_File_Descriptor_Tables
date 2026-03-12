@@ -38,3 +38,10 @@ void append_fd_entry(FDTable *table, FDEntry entry)
     table->entries[table->size] = entry;
     table->size++;
 }
+
+void free_fd_table(FDTable *table){
+    free(table->entries);
+    table->entries = NULL;
+    table->size = 0;
+    table->capacity = 0;
+}

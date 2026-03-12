@@ -6,6 +6,9 @@
 #include <string.h>
 #include <ctype.h>
 
+#include "parser.h"
+#include "table.h"
+
 // Instead of creating an array to store the state of my 
 // arguments then I will update them in the parser;
 
