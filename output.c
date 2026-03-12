@@ -3,13 +3,11 @@
 #include "table.h"
 
 void print_per_process_table(FDTable *table) {
-    int i;
-
     printf("\n");
     printf("         PID     FD\n");
     printf("        ============\n");
 
-    for (i = 0; i < table->size; i++) {
+    for (int i = 0; i < table->size; i++) {
         printf("         %d  %d\n",
                table->entries[i].pid,
                table->entries[i].fd);
@@ -19,13 +17,11 @@ void print_per_process_table(FDTable *table) {
 }
 
 void print_system_wide_table(FDTable *table) {
-    int i;
-
     printf("\n");
     printf("         PID     FD      Filename\n");
     printf("        ========================================\n");
 
-    for (i = 0; i < table->size; i++) {
+    for (int i = 0; i < table->size; i++) {
         printf("         %d  %d  %s\n",
                table->entries[i].pid,
                table->entries[i].fd,
@@ -36,13 +32,11 @@ void print_system_wide_table(FDTable *table) {
 }
 
 void print_vnodes_table(FDTable *table) {
-    int i;
-
     printf("\n");
     printf("           FD            Inode\n");
     printf("        ========================================\n");
 
-    for (i = 0; i < table->size; i++) {
+    for (int i = 0; i < table->size; i++) {
         printf("           %d              %lu\n",
                table->entries[i].fd,
                table->entries[i].inode);
@@ -52,13 +46,11 @@ void print_vnodes_table(FDTable *table) {
 }
 
 void print_composite_table(FDTable *table) {
-    int i;
-
     printf("\n");
     printf("         PID     FD      Filename                Inode\n");
     printf("        ===============================================\n");
 
-    for (i = 0; i < table->size; i++) {
+    for (int i = 0; i < table->size; i++) {
         printf("         %d  %d  %s  %lu\n",
                table->entries[i].pid,
                table->entries[i].fd,
