@@ -11,7 +11,7 @@ typedef struct {
     int process_id;
 } Config;
 
-int is_number_string(const char *s);
+int is_number_string(char *s);
 void parser(int argc, char **argv, Config *cfg);
 
 #endif
