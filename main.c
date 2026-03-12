@@ -1,3 +1,5 @@
+// main.c
+
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
@@ -82,8 +84,6 @@ If no args are passed in:
     } else {
         collect_fd_for_all_user_processes(&table);
     }
-
-    printf("Stored entries: %d\n", table.size);
 
     for (int i = 0; i < table.size; i++) {
         printf("PID: %d  FD: %d  File: %s  Inode: %lu\n",
