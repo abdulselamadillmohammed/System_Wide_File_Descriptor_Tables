@@ -9,6 +9,14 @@
 // Instead of creating an array to store the state of my 
 // arguments then I will update them in the parser;
 
+/*
+
+If no args are passed in:
+    cfg->composite = 1
+
+
+*/
+
 
 typedef struct{
     int per_process;
@@ -56,6 +64,22 @@ typedef struct{
  * user executing the program
  * 
  */
+
+ int is_number_string(char *s){
+    int i;
+    if (s == NULL || s[0] == '\0'){
+        return 0;   
+    }
+
+    for (int i = 0; s[i] != '\0'; i++){
+        if (!isdigit(s[i])){
+            return 0;
+        }         
+    }
+    return 1;
+
+ }
+
  void parser(int argc, char** argv, Config* cfg){
 
     // *(positional_argument) = x; 
@@ -85,8 +109,13 @@ typedef struct{
         // Check positional argument (all you have to )
         // Note: I'm going to check that the current version i have 
         // is 0 and only will i change
-        else if (isdigit(argv[i+1][0])) // If the first digit is a number
-            cfg->process_id = atoi(argv[i+1]);
+        else if (is_number_string(argv[i+1])) // If the first digit is a number
+            if (cfg->process_id != -1){
+                fprintf(stderr, "Error: only one PID positional argument is allowed.\n");
+                exit(1);
+            }
+
+        
     }
  }
 int main(int argc, char** argv){
@@ -100,7 +129,7 @@ int main(int argc, char** argv){
                     0,
                     0,
                     0,
-                    0, 
+                    -1, // Threshold can technically be 0 so set to -1
                     -1};
 
     // Call to parser

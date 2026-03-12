@@ -1,0 +1,10 @@
+
+Things to acomplish:
+
+1. fix parsing
+
+2. decide your internal data structure
+
+3. build the /proc reader for one PID
+
+4. then build printing modes on top of that
