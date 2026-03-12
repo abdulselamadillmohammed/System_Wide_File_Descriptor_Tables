@@ -60,7 +60,6 @@ If no args are passed in:
     // signifying 
     Config cfg = {0, 0, 0, 0, 0, -1, -1};
     FDTable table;
-    FDEntry sample;
 
     // Call to parser
     parser(argc, argv, &cfg);
@@ -76,19 +75,21 @@ If no args are passed in:
 
     init_fd_table(&table);
 
-    sample.pid = 1234;
-    sample.fd = 3;
-    strcpy(sample.filename, "/dev/null");
-    sample.inode = 5;
-
-    append_fd_entry(&table, sample);
+    if (cfg.process_id != -1) {
+        collect_fd_for_pid(cfg.process_id, &table);
+    } else {
+        collect_fd_for_pid(getpid(), &table);
+    }
 
     printf("Stored entries: %d\n", table.size);
-    printf("First entry -> PID: %d, FD: %d, File: %s, Inode: %lu\n",
-           table.entries[0].pid,
-           table.entries[0].fd,
-           table.entries[0].filename,
-           table.entries[0].inode);
+
+    for (int i = 0; i < table.size; i++) {
+        printf("PID: %d  FD: %d  File: %s  Inode: %lu\n",
+               table.entries[i].pid,
+               table.entries[i].fd,
+               table.entries[i].filename,
+               table.entries[i].inode);
+    }
 
     free_fd_table(&table);
     return 0;
