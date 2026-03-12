@@ -12,5 +12,12 @@ typedef struct {
     unsigned long inode;
 } FDEntry;
 
+typedef struct {
+    FDEntry *entries;
+    int size;
+    int capacity;
+} FDTable;
+
+
 
 #endif
