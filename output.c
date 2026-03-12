@@ -1,4 +1,5 @@
 #include <stdio.h>
+
 #include "output.h"
 #include "table.h"
 
@@ -59,4 +60,10 @@ void print_composite_table(FDTable *table) {
     }
 
     printf("        ===============================================\n");
+}
+
+void init_summary_table(SummaryTable *table) {
+    table->entries = NULL;
+    table->size = 0;
+    table->capacity = 0;
 }
