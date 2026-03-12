@@ -8,6 +8,7 @@
 
 #include "proc.h"
 #include "table.h"
+#include "parser.h"
 
 void collect_fd_for_pid(pid_t pid, FDTable *table){
     struct dirent *entry;
@@ -25,12 +26,15 @@ void collect_fd_for_pid(pid_t pid, FDTable *table){
         char link_path[1024];
         char target_path[MAX_FILENAME]; 
         struct stat st;
-        int len;
+        ssize_t len;
 
         if (strcmp(entry->d_name, ".") == 0 || strcmp(entry->d_name, "..") == 0) {
             continue;
         }
-        
+        if (!is_number_string(entry->d_name)) {
+            continue;
+        }
+
         fd_entry.pid = pid;
         fd_entry.fd = atoi(entry->d_name);
         
@@ -55,3 +59,4 @@ void collect_fd_for_pid(pid_t pid, FDTable *table){
     
     closedir(fd_dir);
 }
+
