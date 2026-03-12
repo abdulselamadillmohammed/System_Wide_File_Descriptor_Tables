@@ -103,19 +103,31 @@ typedef struct{
         else if (strcmp(argv[i+1], "--summary") == 0)
             cfg->summary = 1;
 
-        else if (strncmp(argv[i+1], "--threshold=", 12) == 0)
-            cfg->threshold = atoi(argv[i+1] + 12);
+        else if (strncmp(argv[i+1], "--threshold=", 12) == 0){  
+            char * value = argv[i+1] + 12;
+            if (!is_number_string(value)){
+                fprintf(stderr, "Error: invalid threshold value in '%s'\n", argv[i+1]);
+                exit(1);
+            }
+            cfg->threshold = atoi(value);
+        }
+            
+
         
         // Check positional argument (all you have to )
         // Note: I'm going to check that the current version i have 
         // is 0 and only will i change
-        else if (is_number_string(argv[i+1])) // If the first digit is a number
+        else if (is_number_string(argv[i+1])) { // If the first digit is a number
             if (cfg->process_id != -1){
                 fprintf(stderr, "Error: only one PID positional argument is allowed.\n");
                 exit(1);
             }
-
-        
+            cfg->process_id = atoi(argv[i + 1]);
+        }
+        else { 
+            fprintf(stderr, "Error: invalid argument '%s'\n", argv[i]);
+            exit(1);
+        }
     }
  }
 int main(int argc, char** argv){
