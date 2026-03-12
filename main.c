@@ -1,10 +1,5 @@
 #include <stdio.h>
-#include <stdlib.h>
-#include <sys/types.h>
-#include <unistd.h>
-
 #include <string.h>
-#include <ctype.h>
 
 #include "parser.h"
 #include "table.h"
@@ -63,14 +58,9 @@ If no args are passed in:
     // For some reason this version is allowed
     // NOTE: add comments clarifying what each predefined arg is 
     // signifying 
-    Config cfg = {  0,    
-                    0,
-                    0,
-                    0,
-                    0,
-                    -1, // Threshold can technically be 0 so set to -1
-                    -1};
-
+    Config cfg = {0, 0, 0, 0, 0, -1, -1};
+    FDTable table;
+    FDEntry sample;
 
     // Call to parser
     parser(argc, argv, &cfg);
@@ -84,15 +74,22 @@ If no args are passed in:
         cfg.composite = 1;
     }
 
-    
-    printf("Per-process: %d\n", cfg.per_process);
-    printf("System-wide: %d\n", cfg.systemWide);
-    printf("Vnodes: %d\n", cfg.Vnodes);
-    printf("Composite: %d\n", cfg.composite);
-    printf("Summary: %d\n", cfg.summary);
-    printf("Threshold: %d\n", cfg.threshold);
+    init_fd_table(&table);
 
-    printf("Process_id: %d\n", cfg.process_id);
+    sample.pid = 1234;
+    sample.fd = 3;
+    strcpy(sample.filename, "/dev/null");
+    sample.inode = 5;
 
+    append_fd_entry(&table, sample);
+
+    printf("Stored entries: %zu\n", table.size);
+    printf("First entry -> PID: %d, FD: %d, File: %s, Inode: %lu\n",
+           table.entries[0].pid,
+           table.entries[0].fd,
+           table.entries[0].filename,
+           table.entries[0].inode);
+
+    free_fd_table(&table);
     return 0;
 }
