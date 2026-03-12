@@ -7,7 +7,7 @@
 #include "parser.h"
 #include "table.h"
 #include "proc.h"
-
+#include "output.h"
 
 // Instead of creating an array to store the state of my 
 // arguments then I will update them in the parser;
@@ -85,13 +85,17 @@ If no args are passed in:
         collect_fd_for_all_user_processes(&table);
     }
 
-    for (int i = 0; i < table.size; i++) {
-        printf("PID: %d  FD: %d  File: %s  Inode: %lu\n",
-               table.entries[i].pid,
-               table.entries[i].fd,
-               table.entries[i].filename,
-               table.entries[i].inode);
-    }
+    if (cfg.per_process)
+        print_per_process_table(&table);
+
+    if (cfg.systemWide) 
+        print_system_wide_table(&table);
+    
+    if (cfg.Vnodes) 
+        print_vnodes_table(&table);
+    
+    if (cfg.composite) 
+        print_composite_table(&table);
 
     free_fd_table(&table);
     return 0;
