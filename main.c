@@ -80,7 +80,7 @@ If no args are passed in:
     if (cfg.process_id != -1) {
         collect_fd_for_pid(cfg.process_id, &table);
     } else {
-        collect_fd_for_pid(getpid(), &table);
+        collect_fd_for_all_user_processes(&table);
     }
 
     printf("Stored entries: %d\n", table.size);
