@@ -6,7 +6,6 @@
 #include "parser.h"
 
 int is_number_string(char *s){
-    int i;
     if (s == NULL || s[0] == '\0'){
         return 0;   
     }
