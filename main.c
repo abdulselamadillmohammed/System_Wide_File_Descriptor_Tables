@@ -83,7 +83,7 @@ If no args are passed in:
 
     append_fd_entry(&table, sample);
 
-    printf("Stored entries: %zu\n", table.size);
+    printf("Stored entries: %d\n", table.size);
     printf("First entry -> PID: %d, FD: %d, File: %s, Inode: %lu\n",
            table.entries[0].pid,
            table.entries[0].fd,
