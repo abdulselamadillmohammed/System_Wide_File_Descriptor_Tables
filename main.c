@@ -1,5 +1,4 @@
 // main.c
-
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
@@ -9,67 +8,19 @@
 #include "proc.h"
 #include "output.h"
 
-// Instead of creating an array to store the state of my 
-// arguments then I will update them in the parser;
+int main(int argc, char** argv){
 
-/*
-
-If no args are passed in:
-    cfg->composite = 1
-
-*/
-
-
-// Compilation step: gcc -Wall -std=c99 process.c -o process
-// All args calling
-
-// Parser 
-/* The parser will extract the following properties
- * --per-process
- * --systemWide
- * --Vnodes
- * --composite
- * --summary
- * --threshold=X
- * 
- * 
- * DEFAULT BEHAVIOR: if no argument is passed to 
- * the program, you must implement one of the 
- * following approaches. 
- * 
- * 1. the program will display the composite table, 
- * i.e. same effect as having used the --composite 
- * flag
- * 
- * 2. the program will display all the tables, i.e. 
- * same effect as having used all the flagged 
- * arguments  --per-process --systemWide --Vnode 
- * --composite 
- * 
- * Positional argument: 
- *  My role is only to accept on positional argument 
- * which indicates that a particular process id number
- * (PID), if not specified; the program will attempt 
- * to process all the currently running processes for the
- * user executing the program
- * 
- */
-
-
- int main(int argc, char** argv){
-    // Initalize the flagged argument container
-
-    // For some reason this version is allowed
-    // NOTE: add comments clarifying what each predefined arg is 
-    // signifying 
+    // Configuration struct storing parsed command-line options
     Config cfg = {0, 0, 0, 0, 0, -1, -1};
+
+    // Tables used to store FD data and aggregated summary information
     FDTable table;
     SummaryTable summary_table;
 
-    // Call to parser
+    // Parse command-line arguments and populate cfg
     parser(argc, argv, &cfg);
 
-    /* Default behavior: if no table flag was passed, use composite */
+    // Default behavior: if no table flag is specified, print the composite table
     if (cfg.per_process == 0 &&
         cfg.systemWide == 0 &&
         cfg.Vnodes == 0 &&
@@ -78,15 +29,21 @@ If no args are passed in:
         cfg.composite = 1;
     }
 
+    // Initialize data structures used to store collected FD information
     init_fd_table(&table);
     init_summary_table(&summary_table);
 
+    // If a specific PID was provided, collect FDs only for that process.
+    // Otherwise scan all processes belonging to the current user.
     if (cfg.process_id != -1)
         collect_fd_for_pid(cfg.process_id, &table);
     else
         collect_fd_for_all_user_processes(&table);
     
+    // Build a summary table counting the number of FDs per PID
     build_summary_table(&table, &summary_table);
+
+    // Print tables depending on which flags were provided
 
     if (cfg.per_process)
         print_per_process_table(&table);
@@ -103,9 +60,11 @@ If no args are passed in:
     if (cfg.summary)
         print_summary_table(&summary_table);
 
+    // Print offending processes if a threshold was specified
     if (cfg.threshold != -1)
         print_threshold_table(&summary_table, cfg.threshold);
 
+    // Free dynamically allocated memory before exiting
     free_fd_table(&table);
     free_summary_table(&summary_table);
 
