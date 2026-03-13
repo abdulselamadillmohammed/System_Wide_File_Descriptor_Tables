@@ -19,7 +19,7 @@ $(TARGET): $(OBJ)
 
 .PHONY: dist
 dist:
-	tar -czf showFDtables.tar.gz $(SRC) $(HEADERS) Makefile README.md
+	tar -czf showFDtables.tar.gz $(SRC) $(HEADERS) Makefile README.txt Flowchart.pdf
 
 .PHONY: clean
 clean:
