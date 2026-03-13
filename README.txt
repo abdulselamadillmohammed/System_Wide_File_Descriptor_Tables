@@ -188,12 +188,19 @@ for running processes.
 The default behaviour i chose is no argument is passed to the program 
 is to display the composite table.
 
+In regards to the warning produced during compilation:
+Despite the warning, the program compiles successfully and readlink() 
+functions correctly on the target Linux system. The warning is related to 
+POSIX feature visibility when compiling with the -std=c99 flag, but it 
+does not affect the correctness or execution of the program.
+
 
 ## References
     https://man7.org/linux/man-pages/man5/proc.5.html
     https://tldp.org/LDP/Linux-Filesystem-Hierarchy/html/proc.html 
     https://man7.org/linux/man-pages/man0/dirent.h.0p.html 
     https://man7.org/linux/man-pages/man2/lstat.2.html
+    https://man7.org/linux/man-pages/man2/readlink.2.html
     https://man7.org/linux/man-pages/man3/snprintf.3p.html 
     https://man7.org/linux/man-pages/man3/fprintf.3p.html 
     https://man7.org/linux/man-pages/man0/sys_types.h.0p.html 

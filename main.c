@@ -99,7 +99,13 @@ If no args are passed in:
     
     if (cfg.composite) 
         print_composite_table(&table);
-    
+        
+    if (cfg.summary)
+        print_summary_table(&summary_table);
+
+    if (cfg.threshold != -1)
+        print_threshold_table(&summary_table, cfg.threshold);
+
     free_fd_table(&table);
     free_summary_table(&summary_table);
 
